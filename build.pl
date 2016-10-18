@@ -7,7 +7,19 @@ use warnings;
 
 sub BuildAndroid
 {
-	PrepareAndroidSDK::GetAndroidSDK(undef, undef, "r9");
+	# If the ANDROID_NDK_ROOT is already set, assume someone else has prepared the NDK for us.
+	# This will happen when being built by our mono build scripts
+	my $ndkRootToUse = "";
+	if ("$ENV{ANDROID_NDK_ROOT}" ne "")
+	{
+		$ndkRootToUse = $ENV{ANDROID_NDK_ROOT};
+	}
+	else
+	{
+		PrepareAndroidSDK::GetAndroidSDK(undef, undef, "r9");
+		$ndkRootToUse = $ENV{ANDROID_NDK_ROOT};
+	}
+
 	system('$ANDROID_NDK_ROOT/ndk-build clean');
 	system('$ANDROID_NDK_ROOT/ndk-build');
 }
