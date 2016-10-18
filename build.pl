@@ -16,7 +16,7 @@ sub BuildAndroid
 	}
 	else
 	{
-		PrepareAndroidSDK::GetAndroidSDK(undef, undef, "r9");
+		PrepareAndroidSDK::GetAndroidSDK(undef, undef, "r10e");
 		$ndkRootToUse = $ENV{ANDROID_NDK_ROOT};
 	}
 
