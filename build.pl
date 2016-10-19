@@ -37,5 +37,16 @@ sub ZipIt
 	system("cd obj/local/armeabi && zip ../../../builds.zip -r *.a build.txt") && die("Failed to package libraries into zip file.");
 }
 
+my $runningUnderMonoBuild = 0;
+if ("$ENV{ANDROID_NDK_ROOT}" ne "")
+{
+	$runningUnderMonoBuild = 1;
+}
+
 BuildAndroid();
-ZipIt();
+
+# If we are running as part of the mono build, don't zip it, because we don't need the zip
+if (!$runningUnderMonoBuild)
+{
+	ZipIt();
+}
